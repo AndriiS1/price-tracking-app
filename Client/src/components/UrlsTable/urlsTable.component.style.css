@@ -1,0 +1,15 @@
+.table-content-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-content-text {
+  margin-top: 10%;
+  font-size: 100;
+}
+
+.custom-table-row:hover {
+  background-color: rgb(235, 235, 235);
+}
