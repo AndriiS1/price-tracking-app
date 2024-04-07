@@ -11,7 +11,7 @@ public class UserRepository : Repository<User>, IUserRepository
     {
     }
 
-    public void UpdateUserRefreshTokenData(long userId, RefreshTokenDataDto refreshTokenDataDto)
+    public void UpdateUserRefreshTokenData(Guid userId, RefreshTokenDataDto refreshTokenDataDto)
     {
         var userToUpdate = Context.Set<User>().Single(u => u.Id == userId);
         userToUpdate.RefreshToken = refreshTokenDataDto.RefreshToken;

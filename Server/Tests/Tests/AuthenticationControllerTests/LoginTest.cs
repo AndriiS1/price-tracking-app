@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Domain;
 using Domain.Dto;
+using Domain.Enums;
 using Domain.Models;
 using Domain.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -49,12 +50,15 @@ public class LoginTest
 
             var user = new User
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 Email = "test@example.com",
-                Password = "hashedPassword"
+                Password = "hashedPassword",
+                FirstName = "text",
+                SecondName = "test",
+                Role = UserRole.Basic
             };
 
-            var accessToken = "accessToken";
+            const string accessToken = "accessToken";
             var refreshTokenDataDto = new RefreshTokenDataDto
             {
                 RefreshToken = "refreshToken"
@@ -76,7 +80,7 @@ public class LoginTest
                 Assert.IsNotNull(result?.Value);
                 Assert.That(result?.Value?.GetType()?.GetProperty("accessToken")?.GetValue(result.Value),
                     Is.EqualTo(accessToken));
-                Assert.That(result?.Value?.GetType()?.GetProperty("refreshToken").GetValue(result.Value),
+                Assert.That(result?.Value?.GetType()?.GetProperty("refreshToken")?.GetValue(result.Value),
                     Is.EqualTo(refreshTokenDataDto.RefreshToken));
             });
         }

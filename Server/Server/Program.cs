@@ -11,13 +11,13 @@ public class Program
         builder.Services.AddControllers();
 
         builder.AddServerDbContext();
-        builder.ConfigureJWT();
+        builder.ConfigureJwt();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddCustomizedSwagger();
         builder.Services.AddJwtService();
         builder.Services.AddHashService();
         builder.Services.AddUnitOfWork();
-        builder.Services.AddurlShortenerService();
+        builder.Services.AddUrlShortenerService();
         builder.Services.AddValidationService();
         builder.Services.AddCustomCors();
 

@@ -13,7 +13,7 @@ namespace ServerPresentation.Extensions;
 
 public static class ServiceExtensions
 {
-    public static void ConfigureJWT(this WebApplicationBuilder builder)
+    public static void ConfigureJwt(this WebApplicationBuilder builder)
     {
         builder.Services.AddAuthentication(options =>
         {
@@ -57,7 +57,7 @@ public static class ServiceExtensions
         services.AddSingleton<IValidationService, ValidationService>();
     }
 
-    public static void AddurlShortenerService(this IServiceCollection services)
+    public static void AddUrlShortenerService(this IServiceCollection services)
     {
         services.AddSingleton<IUrlShortenerService, UrlShortenerService>();
     }
