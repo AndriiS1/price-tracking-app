@@ -46,6 +46,14 @@ export default function UserForm(props: { formType: userFormType }) {
   }
 
   useEffect(() => {
+    document.body.style.backgroundColor = "black";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, []);
+
+  useEffect(() => {
     const validateField = (
       field: string,
       regexPattern: RegExp,
@@ -92,75 +100,81 @@ export default function UserForm(props: { formType: userFormType }) {
   };
 
   return (
-    <div className="form-wrap">
-      <Form
-        className="form-container"
-        onSubmit={
-          props.formType === userFormType.login
-            ? () => HandleSubmit(SubmitType.login)
-            : () => HandleSubmit(SubmitType.register)
-        }
-      >
-        <span className="form-title">
-          {props.formType === userFormType.login ? "Login" : "Register"}
-        </span>
-        {props.formType == userFormType.register && (
-          <>
-            <TextField
-              error={firstNameError}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-              placeholder="Name"
-              margin="dense"
-              size="small"
-              label="First name"
-            />
-            <TextField
-              error={secondNameError}
-              onChange={(e) => setSecondName(e.target.value)}
-              required
-              placeholder="Surname"
-              margin="dense"
-              size="small"
-              label="Second name"
-            />
-          </>
-        )}
-        <TextField
-          error={emailError}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          placeholder="example@gmail.com"
-          margin="dense"
-          size="small"
-          label="Email"
-        />
-        <TextField
-          error={passwordError}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          type="password"
-          placeholder="Password"
-          margin="dense"
-          size="small"
-          label="Password"
-        />
-        <Button className="form-element" type="submit">
-          Submit
-        </Button>
-        <Link
-          className="register-link form-element"
-          to={props.formType === userFormType.login ? "/register" : "/login"}
+    <div className="auth-content">
+      <section className="welcome-content">
+        <h1>Welcome to price tracking app</h1>
+        Sign up or login to get full functional.
+      </section>
+      <section className="form-wrap">
+        <Form
+          className="form-container"
+          onSubmit={
+            props.formType === userFormType.login
+              ? () => HandleSubmit(SubmitType.login)
+              : () => HandleSubmit(SubmitType.register)
+          }
         >
-          {props.formType === userFormType.login ? "Register" : "Log in"}
-        </Link>
-        <Snackbar
-          open={open}
-          onClose={() => setOpen(false)}
-          autoHideDuration={4000}
-          message={axiosErrorMessage}
-        />
-      </Form>
+          <span className="form-title">
+            {props.formType === userFormType.login ? "Login" : "Register"}
+          </span>
+          {props.formType == userFormType.register && (
+            <>
+              <TextField
+                error={firstNameError}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+                placeholder="Name"
+                margin="dense"
+                size="small"
+                label="First name"
+              />
+              <TextField
+                error={secondNameError}
+                onChange={(e) => setSecondName(e.target.value)}
+                required
+                placeholder="Surname"
+                margin="dense"
+                size="small"
+                label="Second name"
+              />
+            </>
+          )}
+          <TextField
+            error={emailError}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="example@gmail.com"
+            margin="dense"
+            size="small"
+            label="Email"
+          />
+          <TextField
+            error={passwordError}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            type="password"
+            placeholder="Password"
+            margin="dense"
+            size="small"
+            label="Password"
+          />
+          <Button className="form-element" type="submit">
+            Submit
+          </Button>
+          <Link
+            className="register-link form-element"
+            to={props.formType === userFormType.login ? "/register" : "/login"}
+          >
+            {props.formType === userFormType.login ? "Register" : "Log in"}
+          </Link>
+          <Snackbar
+            open={open}
+            onClose={() => setOpen(false)}
+            autoHideDuration={4000}
+            message={axiosErrorMessage}
+          />
+        </Form>
+      </section>
     </div>
   );
 }
