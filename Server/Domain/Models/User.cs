@@ -1,10 +1,11 @@
 ﻿using Domain.Enums;
+using MongoDB.Bson;
 
 namespace Domain.Models;
 
 public class User
 {
-    public required Guid Id { get; set; }
+    public required ObjectId Id { get; set; }
     public required string FirstName { get; set; }
     public required string SecondName { get; set; }
     public required string Email { get; set; }

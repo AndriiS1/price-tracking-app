@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using Domain;
 using Domain.Dto;
 using Domain.Enums;
 using Domain.Models;
@@ -65,7 +64,7 @@ public class LoginTest
             };
 
             _unitOfWorkMock.Setup(u => u.Users.SingleOrDefault(It.IsAny<Expression<Func<User, bool>>>())).Returns(user);
-            _jwtServiceMock.Setup(j => j.GenerateJSONWebToken(user)).Returns(accessToken);
+            _jwtServiceMock.Setup(j => j.GenerateJsonWebToken(user)).Returns(accessToken);
             _jwtServiceMock.Setup(j => j.GenerateRefreshTokenData()).Returns(refreshTokenDataDto);
             _hashServiceMock.Setup(h => h.GetHash(userPassword)).Returns("hashedPassword");
 

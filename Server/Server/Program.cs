@@ -1,4 +1,6 @@
+using Infrastructure;
 using ServerPresentation.Extensions;
+using UseCase;
 
 namespace ServerPresentation;
 
@@ -10,15 +12,11 @@ public class Program
 
         builder.Services.AddControllers();
 
-        builder.AddServerDbContext();
+        builder.ConfigureInfrastructure();
+        builder.ConfigureUseCase();
         builder.ConfigureJwt();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddCustomizedSwagger();
-        builder.Services.AddJwtService();
-        builder.Services.AddHashService();
-        builder.Services.AddUnitOfWork();
-        builder.Services.AddUrlShortenerService();
-        builder.Services.AddValidationService();
         builder.Services.AddCustomCors();
 
         var app = builder.Build();

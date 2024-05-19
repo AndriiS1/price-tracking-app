@@ -1,11 +1,5 @@
 ﻿using System.Text;
-using Domain;
-using Domain.Services;
-using Infrastructure.DataBase;
-using Infrastructure.DataBase.Context;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -34,37 +28,6 @@ public static class ServiceExtensions
                 ValidateIssuerSigningKey = true
             };
         });
-    }
-
-    public static void AddServerDbContext(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddDbContext<ServerDbContext>(
-            options => options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
-    }
-
-    public static void AddJwtService(this IServiceCollection services)
-    {
-        services.AddSingleton<IJwtService, JwtService>();
-    }
-
-    public static void AddHashService(this IServiceCollection services)
-    {
-        services.AddSingleton<IHashService, HashService>();
-    }
-
-    public static void AddValidationService(this IServiceCollection services)
-    {
-        services.AddSingleton<IValidationService, ValidationService>();
-    }
-
-    public static void AddUrlShortenerService(this IServiceCollection services)
-    {
-        services.AddSingleton<IUrlShortenerService, UrlShortenerService>();
-    }
-
-    public static void AddUnitOfWork(this IServiceCollection services)
-    {
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
     public static void AddCustomCors(this IServiceCollection services)
