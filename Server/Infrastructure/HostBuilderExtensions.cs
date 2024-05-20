@@ -37,6 +37,9 @@ public static class HostBuilderExtensions
     {
         services.AddSingleton<MongoContext>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITrackedProductRepository, TrackedProductRepository>();
+        services.AddScoped<IStoreRepository, StoreRepository>();
+        services.AddScoped<IProductStatisticRepository, ProductStatisticRepository>();
     }
 
     private static void AddHashService(this IServiceCollection services)
