@@ -31,8 +31,7 @@ public class GetTrackedProductsQueryHandler(
                 {
                     StoreId = group.Key.ToString(),
                     StoreName = stores.Find(c => c.Id == group.Key)?.Name,
-                    StoreStatistic = group.Value.Select(c => new StatisticResponse { Date = c.Date, Price = c.Price })
-                        .ToList()
+                    StoreLastStatistic = StatisticResponse.FromDomain(group.Value.MaxBy(c => c.Date))
                 }).ToList()
             };
         });
