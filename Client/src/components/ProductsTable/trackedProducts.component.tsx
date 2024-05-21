@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import tokenService from "../../Services/token.service";
 import "./trackedProducts.component.style.css";
 import productService from "../../Services/product.service";
-import { Product } from "../../Services/Dtos/trackedProduct.response";
+import { Product } from "../../Services/Dtos/trackedProducts.response";
 import {
   Card,
   Paper,

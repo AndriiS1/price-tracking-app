@@ -8,9 +8,9 @@ import UserForm, {
   userFormType,
 } from "./components/UserForm/userForm.component";
 import ProtectedWrap from "./components/ProtectedWrap/protectedWrap.component";
-import TrackedProducts from "./components/UrlsTable/trackedProducts.component";
-import UrlInfo from "./components/UrlInfo/urlInfo.component";
+import TrackedProducts from "./components/ProductsTable/trackedProducts.component";
 import About from "./components/About/about.component";
+import ProductInfo from "./components/ProductInfo/productInfo.component";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         path: "/:id",
         element: (
           <ProtectedWrap>
-            <UrlInfo />
+            <ProductInfo />
           </ProtectedWrap>
         ),
       },

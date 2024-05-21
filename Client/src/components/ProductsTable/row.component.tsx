@@ -12,7 +12,7 @@ import {
 import React from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Product } from "../../Services/Dtos/trackedProduct.response";
+import { Product } from "../../Services/Dtos/trackedProducts.response";
 import atb_logo from "../Utils/Atb_logo.png";
 import Fozzy_shop_logo from "../Utils/Fozzy_shop_logo.png";
 
