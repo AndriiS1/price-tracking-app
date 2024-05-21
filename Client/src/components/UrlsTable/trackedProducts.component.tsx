@@ -51,7 +51,7 @@ export default function TrackedProducts() {
             </TableHead>
             <TableBody>
               {products.map((product, index) => (
-                <Row key={product.productId} row={product} index={index} />
+                <Row key={product.id} row={product} index={index} />
               ))}
             </TableBody>
           </Table>

@@ -22,14 +22,14 @@ public class GetTrackedProductsQueryHandler(
         {
             return new TrackedProductResponse
             {
-                ProductId = trackedProduct.Id.ToString(),
+                Id = trackedProduct.Id.ToString(),
                 Name = trackedProduct.Name,
                 StoreStatistics = getAllRelatedStatistic.Where(c => c.TrackedProductId == trackedProduct.Id).Select(
                     group => new StoreResponse
                     {
-                        StoreId = group.StoreId.ToString(),
-                        StoreName = stores.Find(c => c.Id == group.StoreId)?.Name,
-                        StoreLastStatistic = StatisticResponse.FromDomain(group)
+                        Id = group.StoreId.ToString(),
+                        Name = stores.Find(c => c.Id == group.StoreId)?.Name,
+                        LastStatistic = StatisticResponse.FromDomain(group)
                     }).ToList()
             };
         });

@@ -15,6 +15,12 @@ public class ProductStatisticRepository(MongoContext mongoContext) : IProductSta
         await _collection.InsertManyAsync(statistics);
     }
 
+    public async Task<List<ProductStatistic>> GetAll(ObjectId productId)
+    {
+        var filter = Builders<ProductStatistic>.Filter.Where(p => p.TrackedProductId == productId);
+        return await _collection.Find(filter).ToListAsync();
+    }
+
     public async Task<List<ProductStatistic>> GetLatest(IEnumerable<ObjectId> trackedObjectIds)
     {
         var filter = Builders<ProductStatistic>.Filter.In(statistic => statistic.TrackedProductId, trackedObjectIds);

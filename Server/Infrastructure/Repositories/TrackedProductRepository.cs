@@ -26,6 +26,12 @@ public class TrackedProductRepository(MongoContext mongoContext) : ITrackedProdu
             .ToListAsync();
     }
 
+    public async Task<TrackedProduct?> Get(ObjectId id)
+    {
+        var filter = Builders<TrackedProduct>.Filter.Eq(p => p.Id, id);
+        return await _collection.Find(filter).FirstOrDefaultAsync();
+    }
+
     public async Task<TrackedProduct?> GetByName(string name)
     {
         var filter = Builders<TrackedProduct>.Filter.Eq(p => p.Name, name);

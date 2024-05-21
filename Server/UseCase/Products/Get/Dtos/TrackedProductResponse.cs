@@ -1,4 +1,4 @@
-﻿namespace UseCase.Products.Get_all.Dtos;
+﻿namespace UseCase.Products.Get.Dtos;
 
 public class TrackedProductResponse
 {

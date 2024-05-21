@@ -7,4 +7,5 @@ public interface IProductStatisticRepository
 {
     Task CreateMany(IEnumerable<ProductStatistic> statistics);
     Task<List<ProductStatistic>> GetLatest(IEnumerable<ObjectId> trackedObjectIds);
+    Task<List<ProductStatistic>> GetAll(ObjectId productId);
 }

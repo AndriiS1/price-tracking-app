@@ -1,41 +1,35 @@
-// PriceStatistic.ts
 export interface PriceStatistic {
   price: number;
   date: string;
 }
 
-// StoreStatistic.ts
 export interface StoreStatistic {
-  storeId: string;
-  storeName: string;
-  storeLastStatistic: PriceStatistic; // Update to storeLastStatistic
+  id: string;
+  name: string;
+  lastStatistic: PriceStatistic;
 }
 
-// Product.ts
 export interface Product {
-  productId: string;
+  id: string;
   name: string;
   storeStatistics: StoreStatistic[];
 }
 
-// PriceStatisticClass.ts
 export class PriceStatisticClass {
   constructor(public price: number, public date: string) {}
 }
 
-// StoreStatisticClass.ts
 export class StoreStatisticClass {
   constructor(
-    public storeId: string,
-    public storeName: string,
-    public storeLastStatistic: PriceStatisticClass // Update to storeLastStatistic
+    public id: string,
+    public name: string,
+    public lastStatistic: PriceStatisticClass
   ) {}
 }
 
-// ProductClass.ts
 export class ProductClass {
   constructor(
-    public productId: string,
+    public id: string,
     public name: string,
     public storeStatistics: StoreStatisticClass[]
   ) {}
@@ -46,20 +40,16 @@ export function parseProducts(data: any[]): ProductClass[] {
     const storeStatistics = productData.storeStatistics.map(
       (storeStat: any) => {
         const priceStatistic = new PriceStatisticClass(
-          storeStat.storeLastStatistic.price,
-          storeStat.storeLastStatistic.date
+          storeStat.lastStatistic.price,
+          storeStat.lastStatistic.date
         );
         return new StoreStatisticClass(
-          storeStat.storeId,
-          storeStat.storeName,
+          storeStat.id,
+          storeStat.name,
           priceStatistic
         );
       }
     );
-    return new ProductClass(
-      productData.productId,
-      productData.name,
-      storeStatistics
-    );
+    return new ProductClass(productData.id, productData.name, storeStatistics);
   });
 }

@@ -9,4 +9,5 @@ public interface ITrackedProductRepository
     Task Create(TrackedProduct product);
     Task Increment(ObjectId id, int increment);
     Task<List<TrackedProduct>> Get(int page, int size);
+    Task<TrackedProduct?> Get(ObjectId id);
 }

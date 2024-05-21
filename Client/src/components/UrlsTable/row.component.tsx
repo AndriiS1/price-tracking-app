@@ -80,21 +80,18 @@ export function Row(props: { row: Product; index: number }) {
                 </TableHead>
                 <TableBody>
                   {product.storeStatistics.map((statistic) => (
-                    <TableRow key={statistic.storeId}>
+                    <TableRow key={statistic.id}>
                       <TableCell align="left" component="th" scope="row">
-                        <img
-                          src={GetLogoPath(statistic.storeName)}
-                          height="30px"
-                        />
+                        <img src={GetLogoPath(statistic.name)} height="30px" />
                       </TableCell>
                       <TableCell align="center" component="th" scope="row">
-                        {statistic.storeName}
+                        {statistic.name}
                       </TableCell>
                       <TableCell align="center" component="th" scope="row">
-                        {statistic.storeLastStatistic.price}
+                        {statistic.lastStatistic.price}
                       </TableCell>
                       <TableCell align="center" component="th" scope="row">
-                        {parseDate(statistic.storeLastStatistic.date)}
+                        {parseDate(statistic.lastStatistic.date)}
                       </TableCell>
                     </TableRow>
                   ))}
