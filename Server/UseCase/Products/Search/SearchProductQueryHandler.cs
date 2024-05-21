@@ -1,41 +1,99 @@
 ﻿using System.Text.RegularExpressions;
+using Domain.Models;
 using Domain.Repositories;
 using HtmlAgilityPack;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson;
+using UseCase.Products.Search.Dtos;
 
 namespace UseCase.Products.Search;
 
 public class SearchProductQueryHandler(
-    IStoreRepository storeRepository)
+    IStoreRepository storeRepository,
+    ITrackedProductRepository trackedProductRepository,
+    IProductStatisticRepository productStatistic)
     : IRequestHandler<SearchProductQuery, IActionResult>
 {
+    private const string PricePattern = @"\d+[\.,]\d+";
+
     public async Task<IActionResult> Handle(SearchProductQuery query, CancellationToken cancellationToken)
     {
-        // Launch a new browser instance
+        var stores = await storeRepository.GetAll();
+        var regex = new Regex(PricePattern);
 
-        var url = "https://www.atbmarket.com/sch?page=1&lang=uk&location=1154&query=%D1%8F%D0%B9%D1%86%D1%8F";
-
-        // Load the HTML document from the URL
-        var web = new HtmlWeb();
-        var doc = web.Load(url);
-
-        var priceNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'product-price')]");
-
-        // List to store the parsed prices
-        var prices = new List<decimal>();
-
-        if (priceNodes != null)
+        var responses = stores.Select(store =>
         {
-            // Iterate through each price node
-            foreach (var node in priceNodes)
-            {
-                var pattern = @"\d+\.\d+";
-                var regex = new Regex(pattern);
-                prices.Add(decimal.Parse(regex.Matches(node.InnerText)[0].Value.Replace(".", ",")));
-            }
-        }
+            var searchUrl = store.SearchUrl + query.ProductName;
 
-        return new OkObjectResult(prices);
+            var web = new HtmlWeb();
+            var doc = web.Load(searchUrl);
+
+            var priceNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'price')]");
+
+            if (priceNodes == null)
+            {
+                return null;
+            }
+
+            var prices = priceNodes.Select(n =>
+                {
+                    var priceText = regex.Match(n.InnerText).Value;
+
+                    if (priceText.IsNullOrEmpty())
+                    {
+                        return 0;
+                    }
+
+                    var price = decimal.Parse(priceText.Replace(".", ","));
+                    return price;
+                })
+                .Where(x => x != 0)
+                .ToList();
+
+            return ToSearchResponse(prices, store);
+        }).ToList();
+
+        var withoutNulls = responses.Where(response => response is not null);
+        await HandleTrackedProduct(query.ProductName, withoutNulls!);
+        return new OkObjectResult(withoutNulls!);
+    }
+
+    private async Task HandleTrackedProduct(string productName, IEnumerable<SearchResponse> searchResponses)
+    {
+        var tryGetTrackedProduct = await trackedProductRepository.GetByName(productName);
+
+        if (tryGetTrackedProduct is not null)
+        {
+            await trackedProductRepository.Increment(tryGetTrackedProduct.Id, 1);
+        }
+        else
+        {
+            var productId = ObjectId.GenerateNewId();
+            await trackedProductRepository.Create(new TrackedProduct
+                { Id = productId, Name = productName, TotalSearchCount = 1 });
+            await productStatistic.CreateMany(searchResponses.Select(response => new ProductStatistic()
+            {
+                Date = DateTime.UtcNow,
+                Id = ObjectId.GenerateNewId(),
+                Price = response.Average,
+                StoreId = ObjectId.Parse(response.StoreId),
+                TrackedProductId = productId
+            }));
+        }
+    }
+
+    private static SearchResponse ToSearchResponse(IReadOnlyCollection<decimal> prices, Store store)
+    {
+        return new SearchResponse
+        {
+            StoreId = store.Id.ToString(),
+            StoreName = store.Name,
+            MaxPrice = prices.Max(),
+            MinPrice = prices.Min(),
+            Average = prices.Average(),
+            SearchUrl = store.SearchUrl
+        };
     }
 }

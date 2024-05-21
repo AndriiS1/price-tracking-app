@@ -7,6 +7,6 @@ public class ProductStatistic
     public required ObjectId Id { get; set; }
     public required ObjectId TrackedProductId { get; set; }
     public required ObjectId StoreId { get; set; }
-    public required double Price { get; set; }
+    public required decimal Price { get; set; }
     public required DateTime Date { get; set; }
 }
