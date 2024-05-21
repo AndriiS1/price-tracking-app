@@ -52,7 +52,7 @@ public class SearchProductQueryHandler(
                 .Where(x => x != 0)
                 .ToList();
 
-            return ToSearchResponse(prices, store);
+            return ToSearchResponse(prices, store, query.ProductName);
         }).ToList();
 
         var withoutNulls = responses.Where(response => response is not null);
@@ -84,7 +84,7 @@ public class SearchProductQueryHandler(
         }
     }
 
-    private static SearchResponse ToSearchResponse(IReadOnlyCollection<decimal> prices, Store store)
+    private static SearchResponse ToSearchResponse(IReadOnlyCollection<decimal> prices, Store store, string search)
     {
         return new SearchResponse
         {
@@ -93,7 +93,7 @@ public class SearchProductQueryHandler(
             MaxPrice = prices.Max(),
             MinPrice = prices.Min(),
             Average = prices.Average(),
-            SearchUrl = store.SearchUrl
+            SearchUrl = store.SearchUrl + search
         };
     }
 }

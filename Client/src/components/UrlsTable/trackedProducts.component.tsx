@@ -4,6 +4,7 @@ import "./trackedProducts.component.style.css";
 import productService from "../../Services/product.service";
 import { Product } from "../../Services/Dtos/trackedProduct.response";
 import {
+  Card,
   Paper,
   Table,
   TableBody,
@@ -30,15 +31,22 @@ export default function TrackedProducts() {
 
   return (
     <div>
-      <div>
-        <h1>Найбільш популярні пошукові запити</h1>
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
+      <div className="main-content-wrap">
+        <h1>Найпопулярніші пошукові запити</h1>
+        <TableContainer
+          component={Paper}
+          sx={{ minWidth: 650, maxWidth: 950 }}
+          className="product-table"
+        >
+          <Table
+            aria-label="collapsible table"
+            sx={{ minWidth: 650, maxWidth: 950 }}
+          >
             <TableHead>
               <TableRow>
                 <TableCell />
-                <TableCell>№</TableCell>
-                <TableCell align="right">Назва продукту</TableCell>
+                <TableCell align="center">№</TableCell>
+                <TableCell align="center">Назва продукту</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

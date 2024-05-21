@@ -18,10 +18,10 @@ export default function Root() {
         <Toolbar>
           <div className="nav-buttons">
             <NavLink className="nav-link" to={"/"}>
-              Home
+              Price space
             </NavLink>
             <NavLink className="nav-link" to={"/about"}>
-              About
+              Історія
             </NavLink>
           </div>
           <div className="name-info">
@@ -35,16 +35,16 @@ export default function Root() {
               }}
               to={"/login"}
             >
-              Log out
+              Вийти
             </NavLink>
           ) : (
             <>
               {" "}
               <NavLink className="nav-link" to={"/login"}>
-                Log In
+                Ввійти
               </NavLink>
               <NavLink className="nav-link" to={"/register"}>
-                Register
+                Зареєструватися
               </NavLink>
             </>
           )}

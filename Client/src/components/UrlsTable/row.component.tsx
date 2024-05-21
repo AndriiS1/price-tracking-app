@@ -55,10 +55,10 @@ export function Row(props: { row: Product; index: number }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align="center">
           {props.index + 1}
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align="center">
           {product.name}
         </TableCell>
       </TableRow>
@@ -73,9 +73,9 @@ export function Row(props: { row: Product; index: number }) {
                 <TableHead>
                   <TableRow>
                     <TableCell align="left">Лого</TableCell>
-                    <TableCell align="left">Магазин</TableCell>
+                    <TableCell align="center">Магазин</TableCell>
                     <TableCell align="center">Середня ціна(₴)</TableCell>
-                    <TableCell align="right">Останнє оновлення</TableCell>
+                    <TableCell align="center">Останнє оновлення</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -87,13 +87,13 @@ export function Row(props: { row: Product; index: number }) {
                           height="30px"
                         />
                       </TableCell>
-                      <TableCell align="left" component="th" scope="row">
+                      <TableCell align="center" component="th" scope="row">
                         {statistic.storeName}
                       </TableCell>
                       <TableCell align="center" component="th" scope="row">
                         {statistic.storeLastStatistic.price}
                       </TableCell>
-                      <TableCell align="right" component="th" scope="row">
+                      <TableCell align="center" component="th" scope="row">
                         {parseDate(statistic.storeLastStatistic.date)}
                       </TableCell>
                     </TableRow>

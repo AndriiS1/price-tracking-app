@@ -46,10 +46,17 @@ export default function UserForm(props: { formType: userFormType }) {
   }
 
   useEffect(() => {
-    document.body.style.backgroundColor = "black";
-
+    const gradientStyle = `
+      linear-gradient(
+        204deg,
+        rgba(131, 58, 180, 0.8) 0%,
+        rgba(253, 29, 29, 0.8) 50%,
+        rgba(252, 176, 69, 1) 100%
+      )
+    `;
+    document.body.style.background = gradientStyle;
     return () => {
-      document.body.style.backgroundColor = "";
+      document.body.style.background = "";
     };
   }, []);
 
@@ -104,10 +111,13 @@ export default function UserForm(props: { formType: userFormType }) {
       <section className="welcome-content">
         <div className="welcome-text">
           <h1>Price space</h1>
-          Welcome to user-oriented price <br /> tracking app
+          Вітаємо на користувацько-орієнтованій <br /> платформі для
+          відслідковування цін
           <br />
           <br />
-          Sign up or login to get access <br /> to get full functional.
+          Ввійдіть, або зареєструйтеся, <br /> щоб отримати доступ до повного
+          <br />
+          функціоналу.
         </div>
       </section>
       <section className="form-wrap">
@@ -120,7 +130,7 @@ export default function UserForm(props: { formType: userFormType }) {
           }
         >
           <span className="form-title">
-            {props.formType === userFormType.login ? "Login" : "Register"}
+            {props.formType === userFormType.login ? "Вхід" : "Реєстрація"}
           </span>
           {props.formType == userFormType.register && (
             <>
@@ -151,26 +161,28 @@ export default function UserForm(props: { formType: userFormType }) {
             placeholder="example@gmail.com"
             margin="dense"
             size="small"
-            label="Email"
+            label="Емейл"
           />
           <TextField
             error={passwordError}
             onChange={(e) => setPassword(e.target.value)}
             required
             type="password"
-            placeholder="Password"
+            placeholder="пароль"
             margin="dense"
             size="small"
-            label="Password"
+            label="Пароль"
           />
           <Button className="form-element" type="submit">
-            Submit
+            Підтвердити
           </Button>
           <Link
             className="register-link form-element"
             to={props.formType === userFormType.login ? "/register" : "/login"}
           >
-            {props.formType === userFormType.login ? "Register" : "Log in"}
+            {props.formType === userFormType.login
+              ? "Зареєструватися"
+              : "Ввійти"}
           </Link>
           <Snackbar
             open={open}
