@@ -47,7 +47,7 @@ public class SearchProductQueryHandler(
                     }
 
                     var price = decimal.Parse(priceText.Replace(".", ","));
-                    return price;
+                    return Math.Round(price, 2);
                 })
                 .Where(x => x != 0)
                 .ToList();

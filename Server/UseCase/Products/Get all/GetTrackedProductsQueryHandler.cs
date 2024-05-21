@@ -14,12 +14,9 @@ public class GetTrackedProductsQueryHandler(
     public async Task<IActionResult> Handle(GetTrackedProductsQuery query, CancellationToken cancellationToken)
     {
         var trackedProducts = await trackedProductRepository.Get(query.Page, query.Size);
-        var getAllRelatedStatistic = await productStatistic.GetAllRelated(trackedProducts.Select(c => c.Id));
+        var getAllRelatedStatistic = await productStatistic.GetLatest(trackedProducts.Select(c => c.Id));
 
-        var groupedStatistic = getAllRelatedStatistic.GroupBy(c => c.StoreId)
-            .ToDictionary(g => g.Key, g => g.ToList());
-
-        var stores = await storeRepository.GetAllRelated(groupedStatistic.Select(c => c.Key));
+        var stores = await storeRepository.GetAllRelated(getAllRelatedStatistic.Select(c => c.StoreId));
 
         var response = trackedProducts.Select(trackedProduct =>
         {
@@ -27,12 +24,13 @@ public class GetTrackedProductsQueryHandler(
             {
                 ProductId = trackedProduct.Id.ToString(),
                 Name = trackedProduct.Name,
-                StoreStatistics = groupedStatistic.Select(group => new StoreResponse
-                {
-                    StoreId = group.Key.ToString(),
-                    StoreName = stores.Find(c => c.Id == group.Key)?.Name,
-                    StoreLastStatistic = StatisticResponse.FromDomain(group.Value.MaxBy(c => c.Date))
-                }).ToList()
+                StoreStatistics = getAllRelatedStatistic.Where(c => c.TrackedProductId == trackedProduct.Id).Select(
+                    group => new StoreResponse
+                    {
+                        StoreId = group.StoreId.ToString(),
+                        StoreName = stores.Find(c => c.Id == group.StoreId)?.Name,
+                        StoreLastStatistic = StatisticResponse.FromDomain(group)
+                    }).ToList()
             };
         });
 

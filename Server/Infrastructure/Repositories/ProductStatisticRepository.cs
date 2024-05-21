@@ -15,7 +15,7 @@ public class ProductStatisticRepository(MongoContext mongoContext) : IProductSta
         await _collection.InsertManyAsync(statistics);
     }
 
-    public async Task<List<ProductStatistic>> GetAllRelated(IEnumerable<ObjectId> trackedObjectIds)
+    public async Task<List<ProductStatistic>> GetLatest(IEnumerable<ObjectId> trackedObjectIds)
     {
         var filter = Builders<ProductStatistic>.Filter.In(statistic => statistic.TrackedProductId, trackedObjectIds);
 
