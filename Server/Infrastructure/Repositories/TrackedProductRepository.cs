@@ -15,6 +15,17 @@ public class TrackedProductRepository(MongoContext mongoContext) : ITrackedProdu
         await _collection.InsertOneAsync(product);
     }
 
+    public async Task<List<TrackedProduct>> Get(int page, int size)
+    {
+        var skip = (page - 1) * size;
+        var sortDefinition = Builders<TrackedProduct>.Sort.Descending(product => product.TotalSearchCount);
+        return await _collection.Find(product => true)
+            .Sort(sortDefinition)
+            .Skip(skip)
+            .Limit(size)
+            .ToListAsync();
+    }
+
     public async Task<TrackedProduct?> GetByName(string name)
     {
         var filter = Builders<TrackedProduct>.Filter.Eq(p => p.Name, name);
