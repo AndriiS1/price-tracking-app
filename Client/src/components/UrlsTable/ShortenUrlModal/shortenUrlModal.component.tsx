@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import "./shortenUrlModal.component.style.css";
 import { Form } from "react-router-dom";
-import urlService from "../../../Services/url.service";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 
@@ -28,7 +27,6 @@ export default function ShortenUrlModal(props: {
 
   const handleSubmit = async () => {
     try {
-      url && (await urlService.CreateShortUlr(url));
       props.setOpen(false);
     } catch (e) {
       const error = e as AxiosError;

@@ -8,7 +8,7 @@ import UserForm, {
   userFormType,
 } from "./components/UserForm/userForm.component";
 import ProtectedWrap from "./components/ProtectedWrap/protectedWrap.component";
-import UrlsTable from "./components/UrlsTable/urlsTable.component";
+import TrackedProducts from "./components/UrlsTable/trackedProducts.component";
 import UrlInfo from "./components/UrlInfo/urlInfo.component";
 import About from "./components/About/about.component";
 
@@ -19,7 +19,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <UrlsTable />,
+        element: (
+          <ProtectedWrap>
+            <TrackedProducts />
+          </ProtectedWrap>
+        ),
       },
       {
         path: "/:id",

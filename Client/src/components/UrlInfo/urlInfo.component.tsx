@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./urlInfo.component.style.css";
 
-import urlService from "../../Services/url.service";
+import urlService from "../../Services/product.service";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { UrlInfoData } from "./Types/types";
 
@@ -9,19 +9,6 @@ function UrlInfo() {
   const [urlInfo, setUrlInfo] = useState<UrlInfoData>();
   const params = useParams();
   const navigate = useNavigate();
-
-  const getUrlInfo = async () => {
-    try {
-      const result = await urlService.GetUrlInfo(Number(params.id));
-      setUrlInfo(result);
-    } catch (e) {
-      navigate("/");
-    }
-  };
-
-  useEffect(() => {
-    getUrlInfo();
-  }, []);
 
   return (
     <>

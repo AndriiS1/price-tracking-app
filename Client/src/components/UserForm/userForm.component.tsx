@@ -104,8 +104,10 @@ export default function UserForm(props: { formType: userFormType }) {
       <section className="welcome-content">
         <div className="welcome-text">
           <h1>Price space</h1>
-          Welcome to price tracking app <br />
-          Sign up or login to get full functional.
+          Welcome to user-oriented price <br /> tracking app
+          <br />
+          <br />
+          Sign up or login to get access <br /> to get full functional.
         </div>
       </section>
       <section className="form-wrap">
