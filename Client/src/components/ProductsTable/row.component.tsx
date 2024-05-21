@@ -15,6 +15,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Product } from "../../Services/Dtos/trackedProducts.response";
 import atb_logo from "../Utils/Atb_logo.png";
 import Fozzy_shop_logo from "../Utils/Fozzy_shop_logo.png";
+import { Link } from "react-router-dom";
 
 export function Row(props: { row: Product; index: number }) {
   const { row: product } = props;
@@ -59,7 +60,7 @@ export function Row(props: { row: Product; index: number }) {
           {props.index + 1}
         </TableCell>
         <TableCell component="th" scope="row" align="center">
-          {product.name}
+          <Link to={`/${product.id}`}>{product.name}</Link>
         </TableCell>
       </TableRow>
       <TableRow>

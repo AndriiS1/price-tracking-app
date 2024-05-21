@@ -15,3 +15,9 @@
   font-size: large;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+.chart-wrap {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3vh;
+}
