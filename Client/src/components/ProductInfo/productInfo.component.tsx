@@ -11,13 +11,17 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { SingleProduct } from "../../Services/Dtos/trackedProduct.response";
+import {
+  SingleProduct,
+  SingleStoreStatistics,
+} from "../../Services/Dtos/trackedProduct.response";
+import { StoreStatistic } from "../../Services/Dtos/trackedProducts.response";
 
 function ProductInfo() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState<SingleProduct>();
-  const [store, setStore] = useState<string | undefined>();
+  const [store, setStore] = useState<SingleStoreStatistics | undefined>();
   const [chartData, setChartData] = useState<{ x: Date; y: number }[]>([]);
 
   function parseDate(dateString: string): string {
@@ -48,7 +52,7 @@ function ProductInfo() {
   useEffect(() => {
     if (product && store) {
       const selectedStore = product.storeStatistics.find(
-        (s) => s.name === store
+        (s) => s.id === store.id
       );
       if (selectedStore) {
         const newChartData = selectedStore.statistic.map((stat) => ({
@@ -62,7 +66,10 @@ function ProductInfo() {
   }, [product, store]);
 
   const handleChange = (event: any) => {
-    setStore(event.target.value);
+    const selectedStore = product?.storeStatistics.find(
+      (s) => s.name === event.target.value
+    );
+    setStore(selectedStore);
   };
 
   return (
@@ -71,7 +78,11 @@ function ProductInfo() {
         <Stack direction="row" spacing={1}>
           <FormControl size="small" sx={{ minWidth: 150 }}>
             <InputLabel>Магазин</InputLabel>
-            <Select value={store || ""} onChange={handleChange} label="Магазин">
+            <Select
+              value={store?.name || ""}
+              onChange={handleChange}
+              label="Магазин"
+            >
               {product?.storeStatistics.map((store) => (
                 <MenuItem key={store.id} value={store.name}>
                   {store.name}
@@ -95,6 +106,46 @@ function ProductInfo() {
           grid={{ vertical: true, horizontal: true }}
         />
       </Stack>
+      {store && (
+        <div>
+          {store.statistic.length > 0 && (
+            <>
+              <span>
+                Продукт почав відслідковуватися з: {store.statistic[0].date}
+              </span>
+              <br />
+            </>
+          )}
+          {store.statistic.length > 0 && (
+            <>
+              <span>
+                Найменша ціна:{" "}
+                {Math.min(...store.statistic.map((stat) => stat.price))}
+              </span>
+              <br />
+            </>
+          )}
+          {store.statistic.length > 1 && (
+            <>
+              <span>
+                Найбільша ціна:{" "}
+                {Math.max(...store.statistic.map((stat) => stat.price))}
+              </span>
+              <br />
+            </>
+          )}
+          {store.statistic.length > 1 && (
+            <>
+              <span>
+                Рекомендація:{" "}
+                {Math.max(...store.statistic.map((stat) => stat.price))}
+              </span>
+              <br />
+            </>
+          )}
+          <br />
+        </div>
+      )}
     </div>
   );
 }

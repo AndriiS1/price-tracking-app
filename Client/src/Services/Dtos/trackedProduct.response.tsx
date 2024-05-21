@@ -3,7 +3,7 @@ export interface Statistic {
   date: string;
 }
 
-export interface StoreStatistics {
+export interface SingleStoreStatistics {
   id: string;
   name: string;
   statistic: Statistic[];
@@ -12,5 +12,5 @@ export interface StoreStatistics {
 export interface SingleProduct {
   id: string;
   name: string;
-  storeStatistics: StoreStatistics[];
+  storeStatistics: SingleStoreStatistics[];
 }

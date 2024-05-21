@@ -20,6 +20,9 @@ export default function Root() {
             <NavLink className="nav-link" to={"/"}>
               Price space
             </NavLink>
+            <NavLink className="nav-link" to={"/search"}>
+              Пошук
+            </NavLink>
             <NavLink className="nav-link" to={"/about"}>
               Історія
             </NavLink>
