@@ -11,6 +11,7 @@ import ProtectedWrap from "./components/ProtectedWrap/protectedWrap.component";
 import TrackedProducts from "./components/ProductsTable/trackedProducts.component";
 import About from "./components/About/about.component";
 import ProductInfo from "./components/ProductInfo/productInfo.component";
+import SearchPage from "./components/SearchPage/searchPage.component";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedWrap>
             <ProductInfo />
+          </ProtectedWrap>
+        ),
+      },
+      {
+        path: "/search",
+        element: (
+          <ProtectedWrap>
+            <SearchPage />
           </ProtectedWrap>
         ),
       },

@@ -1,0 +1,20 @@
+.search-box {
+  width: 30%;
+}
+
+.search-button {
+  height: 100%;
+  background: linear-gradient(
+    204deg,
+    rgba(131, 58, 180, 1) 30%,
+    rgba(253, 29, 29, 0.8) 70%,
+    rgba(252, 176, 69, 1) 100%
+  );
+}
+
+.search-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20vh;
+}

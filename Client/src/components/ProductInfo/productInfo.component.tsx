@@ -111,7 +111,8 @@ function ProductInfo() {
           {store.statistic.length > 0 && (
             <>
               <span>
-                Продукт почав відслідковуватися з: {store.statistic[0].date}
+                Продукт почав відслідковуватися з:{" "}
+                {parseDate(store.statistic[0].date)}
               </span>
               <br />
             </>
